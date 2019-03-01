@@ -57,12 +57,13 @@ for user in args.users:
         print(repo)
         issues = defaultdict(list)
         for commit in download_commits(repo, user):    
-            issue = commit_number.search(commit[1])
-            if issue is not None:
-                issue = issue.group(0)
-            else:
-                issue = "none"
-            issues[issue].append(commit[0])
+            if not commit[1].startswith("Merge"):
+                issue = commit_number.search(commit[1])
+                if issue is not None:
+                    issue = issue.group(0)
+                else:
+                    issue = "none"
+                issues[issue].append(commit[0])
 
         for (issue, shas) in issues.items():
             print()
