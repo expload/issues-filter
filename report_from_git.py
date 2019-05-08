@@ -47,7 +47,7 @@ def download_commits(repo, user):
 
     return commits
 
-commit_number = re.compile('#(\\d+)')
+commit_number = re.compile('(#\\d+)|(\\w+-\\d+)')
 
 for user in args.users:
     print()
@@ -68,6 +68,9 @@ for user in args.users:
         for (issue, shas) in issues.items():
             print()
             if issue != "none":
+              if "-" in issue:
+                print("https://expload.atlassian.net/browse/{}".format(issue));
+              else:
                 print("https://github.com/{}/issues/{}".format(repo, issue[1:]))
             else:
                 print("none issue")
